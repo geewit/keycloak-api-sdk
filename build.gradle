@@ -1,0 +1,22 @@
+apply from: "https://raw.githubusercontent.com/geewit/gradle_publish_sonatype/master/publish.gradle"
+
+
+dependencies {
+    compile("org.slf4j:slf4j-api:$slf4j_version") {
+        exclude group: 'org.slf4j', module: 'logback'
+    }
+    compileOnly("javax.ws.rs:javax.ws.rs-api:$javax_ws_rs_api_version")
+    compile("org.apache.commons:commons-lang3:$commons_lang3_version")
+    compile("org.keycloak:keycloak-common:$keycloak_version")
+    compile("org.keycloak:keycloak-core:$keycloak_version")
+    compile("org.keycloak:keycloak-server-spi:$keycloak_version")
+    compile("org.keycloak:keycloak-server-spi-private:$keycloak_version")
+    compile("org.jboss.resteasy:resteasy-client:$resteasy_version")
+    compile("org.jboss.resteasy:resteasy-jackson2-provider:$resteasy_version")
+    compile("org.jboss.resteasy:resteasy-multipart-provider:$resteasy_version")
+    compile("org.jboss.resteasy:resteasy-jaxrs:$resteasy_version")
+    compile("com.squareup.okhttp3:okhttp:$okhttp_version")
+    
+    testCompile("junit:junit:$junit_version")
+}
+
