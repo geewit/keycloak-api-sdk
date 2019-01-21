@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 import static org.keycloak.OAuth2Constants.PASSWORD;
 
 public class KeycloakClientTest {
+    private final static Logger logger = LoggerFactory.getLogger(KeycloakClientTest.class);
+
 
     private Keycloak keycloak;
 
@@ -36,10 +40,17 @@ public class KeycloakClientTest {
                 .build();
     }
 
+    @Test
+    public void testLogin() {
+        logger.debug("run keycloak tokenManager client test");
+        Assertions.assertThatCode(() -> keycloak.tokenManager().grantToken())
+                .doesNotThrowAnyException();
+    }
+
 
     @Test
     public void testUsersResource() {
-        System.out.println("run keycloak client test");
+        logger.debug("run keycloak UsersResource client test");
 
         UsersResource usersResource = keycloak.realm(realm).users();
 

@@ -1,7 +1,4 @@
 /*
- * Copyright 2016 Red Hat, Inc. and/or its affiliates
- * and other contributors as indicated by the @author tags.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -35,7 +32,7 @@ import java.util.stream.Collectors;
 import static org.keycloak.OAuth2Constants.*;
 
 /**
- * @author rodrigo.sasaki@icarros.com.br
+ * @author geewit
  */
 public class TokenManager {
     private final static Logger logger = LoggerFactory.getLogger(TokenManager.class);

@@ -1,7 +1,4 @@
 /*
- * Copyright 2016 Red Hat, Inc. and/or its affiliates
- * and other contributors as indicated by the @author tags.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,7 +17,6 @@ package io.geewit.keycloak.client.resteasy.engine;
 import okhttp3.*;
 import okio.Buffer;
 import okio.BufferedSink;
-import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.client.jaxrs.ClientHttpEngine;
 import org.jboss.resteasy.client.jaxrs.internal.ClientInvocation;
 import org.jboss.resteasy.client.jaxrs.internal.ClientResponse;

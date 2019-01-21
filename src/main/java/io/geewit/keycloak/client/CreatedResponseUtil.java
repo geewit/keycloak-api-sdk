@@ -23,8 +23,7 @@ import java.net.URI;
 /**
  * A Utility class that parses the Response object into the underlying ID attribute
  *
- * @author John D. Ament
- * @author Stan Silvert ssilvert@redhat.com (C) 2016 Red Hat Inc.
+ * @author geewit
  */
 public class CreatedResponseUtil {
     /**

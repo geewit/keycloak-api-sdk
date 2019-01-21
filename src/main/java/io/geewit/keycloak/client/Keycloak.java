@@ -1,7 +1,4 @@
 /*
- * Copyright 2016 Red Hat, Inc. and/or its affiliates
- * and other contributors as indicated by the @author tags.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -43,7 +40,7 @@ import static org.keycloak.OAuth2Constants.PASSWORD;
  *
  * To read Responses, you can use {@link CreatedResponseUtil} for objects created
  *
- * @author rodrigo.sasaki@icarros.com.br
+ * @author geewit
  * @see KeycloakBuilder
  */
 public class Keycloak {

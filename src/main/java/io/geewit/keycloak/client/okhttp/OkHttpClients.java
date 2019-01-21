@@ -16,6 +16,9 @@ import java.security.cert.X509Certificate;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author geewit
+ */
 public class OkHttpClients {
 
     private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(HttpLoggingInterceptor.Level.HEADERS);

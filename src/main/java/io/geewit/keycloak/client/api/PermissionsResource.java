@@ -1,7 +1,4 @@
 /*
- * Copyright 2016 Red Hat, Inc. and/or its affiliates
- * and other contributors as indicated by the @author tags.
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -20,7 +17,7 @@ package io.geewit.keycloak.client.api;
 import javax.ws.rs.Path;
 
 /**
- * @author <a href="mailto:psilva@redhat.com">Pedro Igor</a>
+ * @author geewit
  */
 public interface PermissionsResource {
 
