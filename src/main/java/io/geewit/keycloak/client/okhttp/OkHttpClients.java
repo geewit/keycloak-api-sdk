@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OkHttpClients {
 
-    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(HttpLoggingInterceptor.Level.BODY);
+    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(HttpLoggingInterceptor.Level.HEADERS);
 
 
     public static OkHttpClient buildClient(String baseUrl) {

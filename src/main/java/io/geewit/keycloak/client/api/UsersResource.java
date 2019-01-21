@@ -24,11 +24,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("/{realm}/users")
 public interface UsersResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    List<UserRepresentation> search(@PathParam("realm") String realm, @QueryParam("username") String username,
+    List<UserRepresentation> search(@QueryParam("username") String username,
                                     @QueryParam("firstName") String firstName,
                                     @QueryParam("lastName") String lastName,
                                     @QueryParam("email") String email,
@@ -38,18 +37,18 @@ public interface UsersResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    Response create(@PathParam("realm") String realm, UserRepresentation userRepresentation);
+    Response create(UserRepresentation userRepresentation);
 
     @Path("count")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    Integer count(@PathParam("realm") String realm);
+    Integer count();
 
     @Path("{id}")
-    UserResource get(@PathParam("realm") String realm, @PathParam("id") String id);
+    UserResource get(@PathParam("id") String id);
 
     @Path("{id}")
     @DELETE
-    Response delete(@PathParam("realm") String realm, @PathParam("id") String id);
+    Response delete(@PathParam("id") String id);
 
 }

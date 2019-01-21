@@ -2,9 +2,7 @@ apply from: "https://raw.githubusercontent.com/geewit/gradle_publish_sonatype/ma
 
 
 dependencies {
-    compile("org.slf4j:slf4j-api:$slf4j_version") {
-        exclude group: 'org.slf4j', module: 'logback'
-    }
+    compile("org.slf4j:slf4j-api:$slf4j_version")
     compileOnly("javax.ws.rs:javax.ws.rs-api:$javax_ws_rs_api_version")
     compile("org.apache.commons:commons-lang3:$commons_lang3_version")
     compile("org.keycloak:keycloak-common:$keycloak_version")
@@ -18,5 +16,7 @@ dependencies {
     compile("com.squareup.okhttp3:okhttp:$okhttp_version")
     
     testCompile("junit:junit:$junit_version")
+    testCompile("org.assertj:assertj-core:$assertj_version")
+    testCompile("org.slf4j:slf4j-log4j12:$slf4j_version")
 }
 

@@ -148,7 +148,7 @@ public class Keycloak {
      * @return
      */
     public <T> T proxy(Class<T> proxyClass) {
-        return client.target(UriBuilder.fromResource(proxyClass)).register(authFilter()).proxy(proxyClass);
+        return client.target(this.config.getServerUrl() + UriBuilder.fromResource(proxyClass).toTemplate()).register(authFilter()).proxy(proxyClass);
     }
 
     /**

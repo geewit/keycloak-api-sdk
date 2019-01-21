@@ -1,31 +1,80 @@
 package io.geewit.keycloak.client;
 
+import com.google.common.collect.Lists;
+import io.geewit.keycloak.client.api.UserResource;
 import io.geewit.keycloak.client.api.UsersResource;
-import io.geewit.keycloak.client.okhttp.OkHttpClients;
-import io.geewit.keycloak.client.resteasy.engine.OkHttpClientEngine;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
+import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 
-import javax.ws.rs.core.UriBuilder;
 
-import static org.keycloak.OAuth2Constants.CLIENT_CREDENTIALS;
+import java.util.List;
+
 import static org.keycloak.OAuth2Constants.PASSWORD;
 
 public class KeycloakClientTest {
 
+    private Keycloak keycloak;
+
+    private String realm;
+
+    @Before
+    public void setUp() {
+        String baseUrl = "http://localhost:8080/auth";
+        String master = "master";
+        String username = "admin";
+        String password = "admin123456";
+        realm = "app-authz-springboot";
+        keycloak = KeycloakBuilder.builder()
+                .serverUrl(baseUrl)
+                .clientId("security-admin-console")
+                .username(username).password(password)
+                .grantType(PASSWORD)
+                .realm(master)
+                .build();
+    }
+
+
     @Test
     public void testUsersResource() {
         System.out.println("run keycloak client test");
-        String baseUrl = "http://127.0.0.1:8080/auth";
-        String realm = "app-authz-springboot";
-        String clientId = "app-authz-springboot";
-        String clientSecret = "766ef9ee-240f-4faa-8602-2805cd0213a4";
-        String username = "admin";
-        String password = "admin123456";
-        Keycloak keycloak = KeycloakBuilder.builder().serverUrl(baseUrl).clientId(clientId).clientSecret(clientSecret).username(username).password(password).grantType(PASSWORD).realm(realm).build();
-        UsersResource proxy = keycloak.proxy(UsersResource.class);
-        System.out.println("total users = " + proxy.count(realm));
+
+        UsersResource usersResource = keycloak.realm(realm).users();
+
+        UserRepresentation userRepresentation = new UserRepresentation();
+        userRepresentation.setUsername("george");
+        CredentialRepresentation credential = new CredentialRepresentation();
+        credential.setType(CredentialRepresentation.PASSWORD);
+        credential.setValue("123456");
+        credential.setTemporary(false);
+        List<CredentialRepresentation> credentials = Lists.newArrayList(credential);
+        userRepresentation.setCredentials(credentials);
+        userRepresentation.setEnabled(true);
+        usersResource.create(userRepresentation);
+
+
+        Assertions.assertThatCode(() -> usersResource.search(null, null, null, null, 0, 20, true))
+                .doesNotThrowAnyException();
+
+        List<UserRepresentation> users = usersResource.search(null, null, null, null, 0, 20, true);
+
+
+
+        Assertions.assertThatCode(usersResource::count)
+                .doesNotThrowAnyException();
+        int count = usersResource.count();
+
+        if(count > 0) {
+            String userId = users.get(0).getId();
+            UserResource userResource = usersResource.get(userId);
+            Assertions.assertThatCode(userResource::groups)
+                    .doesNotThrowAnyException();
+        }
+
+
+
+
     }
 }

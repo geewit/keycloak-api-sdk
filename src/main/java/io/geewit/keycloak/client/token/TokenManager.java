@@ -23,9 +23,14 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.keycloak.common.util.Time;
 import org.keycloak.representations.AccessTokenResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedMap;
+
+import java.util.stream.Collectors;
 
 import static org.keycloak.OAuth2Constants.*;
 
@@ -33,6 +38,8 @@ import static org.keycloak.OAuth2Constants.*;
  * @author rodrigo.sasaki@icarros.com.br
  */
 public class TokenManager {
+    private final static Logger logger = LoggerFactory.getLogger(TokenManager.class);
+
     private static final long DEFAULT_MIN_VALIDITY = 30;
 
     private AccessTokenResponse currentToken;
@@ -70,19 +77,29 @@ public class TokenManager {
     }
 
     public AccessTokenResponse grantToken() {
-        Form form = new Form().param(GRANT_TYPE, accessTokenGrantType);
-        if (PASSWORD.equals(accessTokenGrantType)) {
+        Form form = new Form();
+        form.param(GRANT_TYPE, accessTokenGrantType);
+        if (PASSWORD.equals(accessTokenGrantType) || CLIENT_CREDENTIALS.equals(accessTokenGrantType)) {
             form.param("username", config.getUsername())
                 .param("password", config.getPassword());
-        }
-
-        if (config.isPublicClient()) {
             form.param(CLIENT_ID, config.getClientId());
+            if (CLIENT_CREDENTIALS.equals(accessTokenGrantType)) {
+                form.param(CLIENT_SECRET, config.getClientSecret());
+            }
         }
 
         int requestTime = Time.currentTime();
         synchronized (this) {
-            currentToken = tokenService.grantToken(config.getRealm(), form.asMap());
+            MultivaluedMap<String, String> parameters = form.asMap();
+            if(logger.isDebugEnabled()) {
+                String parametersStr = parameters.entrySet()
+                        .stream()
+                        .map(entry -> entry.getKey() + ":" + entry.getValue())
+                        .collect(Collectors.joining(", "));
+                logger.debug("form.parameters : " + parametersStr);
+            }
+
+            currentToken = tokenService.grantToken(config.getRealm(), parameters);
             expirationTime = requestTime + currentToken.getExpiresIn();
         }
         return currentToken;

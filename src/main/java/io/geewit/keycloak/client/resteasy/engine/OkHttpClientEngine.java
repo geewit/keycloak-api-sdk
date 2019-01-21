@@ -75,9 +75,10 @@ public class OkHttpClientEngine implements ClientHttpEngine {
     }
 
     private Request createRequest(ClientInvocation request) {
+        String url = request.getUri().toString();
         Request.Builder builder = new Request.Builder()
                 .method(request.getMethod(), createRequestBody(request))
-                .url(request.getUri().toString());
+                .url(url);
         for (Map.Entry<String, List<String>> header : request.getHeaders().asMap().entrySet()) {
             String headerName = header.getKey();
             for (String headerValue : header.getValue()) {

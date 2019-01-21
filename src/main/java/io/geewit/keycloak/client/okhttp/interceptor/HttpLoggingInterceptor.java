@@ -149,7 +149,7 @@ public class HttpLoggingInterceptor implements Interceptor {
                 }
 
                 if (isPlaintext(buffer)) {
-                    logger.debug(buffer.readString(charset));
+                    logger.debug("requestBody" + buffer.readString(charset));
                     logger.debug("--> END " + request.method() + " (" + requestBody.contentLength() + "-byte body)");
                 } else {
                     logger.debug("--> END " + request.method() + " (binary " + requestBody.contentLength() + "-byte body omitted)");
